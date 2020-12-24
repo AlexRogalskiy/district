@@ -1,0 +1,278 @@
+$top-margin: 3rem;
+$small-map-height: 15rem;
+$cell-spacing: 1rem;
+
+.proposal-page {
+	position: relative;
+
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	align-items: flex-start;
+
+	.main {
+		margin-top: $top-margin;
+		@media (#{$bp-larger-than-mobile}) {
+			flex: 0 1 50rem;
+		}
+	}
+
+	.sidebar {
+		display: none;
+		position: relative;
+		flex: 1 0 16rem;
+
+		margin: $top-margin 0 0 $cell-spacing;
+		padding-top: $cell-spacing;
+
+		background-color: $background-color;
+		border: 1px solid $cell-border-color;
+
+		// TODO: restructure markup to allow revisions to show on mobile.
+		@media (#{$bp-larger-than-mobile}) {
+			display: block;
+		}
+
+		.revisions-header {
+			position: relative;
+			height: 3rem;
+			padding: 0 $cell-spacing;
+			border-bottom: 1px solid $cell-border-color;
+
+			h3 {
+				margin: 0;
+				padding-top: 0.5rem;
+				font-weight: bold;
+			}
+		}
+		
+		ul {
+			margin: 0;
+			padding: 0;
+		}
+
+		li {
+			padding: 0 $cell-spacing;
+			list-style-type: none;
+
+			&.darken {
+				color: $text-secondary-color;
+				background-color: $form-background-color;
+			}
+		}
+	}
+
+	.add-revision {
+		position: absolute;
+		right: $cell-spacing;
+		top: 0;
+		width: 6rem;
+		padding: 0.5rem;
+
+		color: $background-color;
+		background-color: $text-link-color;
+		border-radius: 10px;
+		text-align: center;
+		cursor: pointer;
+	}
+
+	.current-and-proposed {
+		position: relative;
+		width: 100%;
+		height: $small-map-height;
+		max-width: calc(100vw - #{2 * $page-horiz-padding-mobile});
+		margin-bottom: 2.5rem;
+
+		> figure {
+			position: absolute;
+			width: 47.5%;
+			height: 100%;
+			left: 0;
+			margin: 0;
+
+			&:last-child {
+				left: auto;
+				right: 0;
+			}
+		}
+
+		figcaption {
+			font-size: 1rem;
+		}
+
+		.geojson-map {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	.diff-map {
+		max-width: calc(100vw - #{2 * $page-horiz-padding-mobile});
+	}
+
+	.info {
+		position: relative;
+		width: 100%;
+
+		margin: $cell-spacing 0;
+		padding: $cell-spacing;
+
+		background-color: $background-color;
+		border: 1px solid $cell-border-color;
+
+		h2.title {
+			margin: 0 0 0.5rem 0;
+			font-size: 1.25rem;
+		}
+
+		a {
+			margin: $cell-spacing 0;
+			font-size: 1rem;
+		}
+
+		.body {
+			max-height: 8rem;
+			text-overflow: clip;
+			overflow-y: auto;
+		}
+
+		.created-date {
+			position: absolute;
+			top: $cell-spacing;
+			right: $cell-spacing;
+
+			color: $text-secondary-color;
+		}
+
+		.footer {
+			height: 3.25rem;
+			padding-top: $cell-spacing;
+
+			border-top: 1px solid $cell-border-color;
+		}
+	}
+	
+	.votes {
+		display: inline-block;
+		width: 4rem;
+		
+		.em {
+			width: 1.5rem;
+			height: 1.5rem;
+			margin-right: 0.5rem;
+
+			-webkit-filter: saturate(0%) contrast(300%) invert(100%);
+			filter: saturate(0%) contrast(300%) invert(100%);
+			opacity: 0.25;
+		}
+
+		&.enabled .em {
+			opacity: 1.0;
+			cursor: pointer;
+
+			&:active {
+				-webkit-filter: saturate(0%) contrast(300%) invert(0%);
+				filter: saturate(0%) contrast(300%) invert(0%);
+			}
+		}
+
+		&.up {
+			//
+		}
+
+		&.down {
+			//
+		}
+
+		.pending {
+			background-image: url('../static/img/loader-32.gif');
+			width: 1.5rem;
+			height: 1.5rem;
+			display: inline-block;
+			vertical-align: middle;
+			opacity: 0.5;
+
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: contain;
+		}
+	}
+
+	.comments {
+		width: 100%;
+
+		padding: $cell-spacing;
+
+		background-color: $background-color;
+		border: 1px solid $cell-border-color;
+
+		h3 {
+			font-weight: bold;
+		}
+
+		ul {
+			margin: 3rem 0 0 0;
+			padding: 0;
+		}
+
+		li {
+			list-style-type: none;
+		}
+	}
+
+	$input-font-size: 1rem;
+	.comment-input {
+		position: relative;
+		textarea {
+			width: 100%;
+			min-height: 5rem;
+			margin-bottom: 3rem;
+			padding: 0.5rem;
+			box-sizing: border-box;
+
+			border: none;
+			background-color: $form-background-color;
+
+			@extend %better-helvetica;
+			font-size: $input-font-size;
+			color: $text-color;
+
+			&::-webkit-input-placeholder {
+				color: rgba($text-color, 0.5);
+				font-size: $input-font-size;
+			}
+			&::-moz-placeholder {
+				font-size: $input-font-size;
+			}
+			&:-ms-input-placeholder {
+				font-size: $input-font-size;
+			}
+			&::placeholder {
+				font-size: $input-font-size;
+			}
+		}
+		.comment-button {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			width: 10rem;
+			padding: 0.5rem;
+
+			color: $background-color;
+			background-color: $text-link-color;
+			border-radius: 10px;
+			text-align: center;
+			cursor: pointer;
+			
+			&.disabled {
+				opacity: 0.5;
+				cursor: auto;
+			}
+		}
+	}
+
+	.signin-cta {
+		display: inline-block;
+		cursor: pointer;
+	}
+}
